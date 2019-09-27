@@ -1,0 +1,17 @@
+.viajes {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.viajes-item {
+    border: 2px solid #333;
+    box-sizing: border-box;
+    flex-grow: 1;
+    margin: 10px;
+    min-width: 280px;
+    padding: 0 20px;
+    width: 30%;
+    background-color: #fff;
+}

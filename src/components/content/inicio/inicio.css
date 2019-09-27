@@ -1,0 +1,17 @@
+.inicio {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.inicio-item {
+    box-sizing: border-box;
+    text-align: center;
+    flex-grow: 1;
+    margin: 10px;
+    min-width: 280px;
+    padding: 0 20px;
+    width: 30%;
+    background-color: #fff;
+}

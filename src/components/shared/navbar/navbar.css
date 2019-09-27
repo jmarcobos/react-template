@@ -1,0 +1,21 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap; 
+}
+
+.busqueda{
+    flex-grow: 3;
+    /*flex: 0 0 20%;*/
+    box-sizing: border-box;
+    text-align: left;
+    padding: calc(1rem - 6px);  
+}
+
+.item {
+    flex-grow: 1;
+    /*flex: 0 0 20%;*/
+    box-sizing: border-box;
+    padding: calc(1rem - 6px);
+}
+
