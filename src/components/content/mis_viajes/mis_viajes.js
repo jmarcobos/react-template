@@ -8,7 +8,7 @@ class MisViajes extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { viajes: [], loading: true, showCreate: false,  titulo: '', subtitulo: '', cuerpo: '', inicio: '', fin: '', precio: '' };
+    this.state = { viajes: [], viaje: {}, loading: true, showCreate: false,  titulo: '', subtitulo: '', cuerpo: '', inicio: '', fin: '', precio: '' };
     this.submit = this.submit.bind(this);
   }
 
@@ -30,21 +30,33 @@ class MisViajes extends Component {
   submit = (event) => {
     event.preventDefault();
     var viaje = {
+      id: null,
       titulo: this.state.titulo,
       subtitulo: this.state.subtitulo,
       cuerpo: this.state.cuerpo,
       inicio: this.state.inicio,
       fin: this.state.fin,
-      precio: this.state.precio
+      precio: this.state.precio,
+      usuario: {
+        email: localStorage.getItem('email')
+      }
     }
+    this.setState({ viaje: viaje });
+    
     postMiViaje(viaje)
       .then((response) => {
+        debugger;
+        /*var viaje = this.state.viaje;
+        viaje.id = response.data.insertId;
+        var viajes = this.state.viajes;
+        viajes.push(viaje);
+        this.setState({ viajes: viajes });
+        this.setState({ showCreate: false });*/
         /*if (response.status === 200 && response.data.password === this.state.password) {
           this.setState({ redirect: true, error: false });
         } else {
           this.setState({ error: true });
         }*/
-        alert('hola');
       })
       .catch((err) => console.log(err));
   }
@@ -79,7 +91,7 @@ class MisViajes extends Component {
         {
           viajes.map(viaje => {
             return (
-              <div key={viaje.cod}>{viaje.titulo} - {viaje.subtitulo}</div>
+              <div key={viaje.id}>{viaje.titulo} - {viaje.subtitulo}</div>
             )
           })
         }
