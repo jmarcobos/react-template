@@ -1,14 +1,27 @@
 import React from 'react';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getMisViajes, postMiViaje } from './mis_viajes.service';
+import { getMisViajes, getMisViajesHistorico, postMiViaje } from './mis_viajes.service';
 import './mis_viajes.css';
 
 class MisViajes extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { viajes: [], viaje: {}, loading: true, showCreate: false,  titulo: '', subtitulo: '', cuerpo: '', inicio: '', fin: '', precio: '' };
+    this.state = { 
+      viajes: [], 
+      viaje: {}, 
+      viajesHistorico: [], 
+      loadingViaje: true, 
+      loadingHistorico: true, 
+      showCreate: false,  
+      titulo: '', 
+      subtitulo: '', 
+      cuerpo: '', 
+      inicio: '', 
+      fin: '', 
+      precio: '' 
+    };
     this.submit = this.submit.bind(this);
   }
 
@@ -17,7 +30,16 @@ class MisViajes extends Component {
       .then((response) => {
         this.setState({
           viajes: response.data,
-          loading: false
+          loadingViaje: false
+        });
+      })
+      .catch((err) => console.log(err));
+
+      getMisViajesHistorico(localStorage.getItem('email'))
+      .then((response) => {
+        this.setState({
+          viajesHistorico: response.data,
+          loadingHistorico: false
         });
       })
       .catch((err) => console.log(err));
@@ -45,18 +67,14 @@ class MisViajes extends Component {
     
     postMiViaje(viaje)
       .then((response) => {
-        debugger;
-        /*var viaje = this.state.viaje;
-        viaje.id = response.data.insertId;
-        var viajes = this.state.viajes;
-        viajes.push(viaje);
-        this.setState({ viajes: viajes });
-        this.setState({ showCreate: false });*/
-        /*if (response.status === 200 && response.data.password === this.state.password) {
-          this.setState({ redirect: true, error: false });
-        } else {
-          this.setState({ error: true });
-        }*/
+        if (response.status === 200 && response.data) {
+          var viaje = this.state.viaje;
+          viaje.id = response.data.insertId;
+          var viajes = this.state.viajes;
+          viajes.push(viaje);
+          this.setState({ viajes: viajes });
+          this.setState({ showCreate: false });
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -85,17 +103,49 @@ class MisViajes extends Component {
     this.setState({ precio: event.target.value });
   }
 
-  renderMisViajes = (viajes) => {
+  renderMisViajes = (viajes, viajesHistorico) => {
     return (
       <div>
-        {
-          viajes.map(viaje => {
-            return (
-              <div key={viaje.id}>{viaje.titulo} - {viaje.subtitulo}</div>
-            )
-          })
-        }
-         <Link className='item' to={this.props.path} onClick={this.mostrarAlta}>Nuevo viaje</Link>
+        <h4>Viajes</h4>    
+        <table>
+          <thead>
+            <tr>
+              <th>Titulo</th>
+              <th>Subtitulo</th>
+              <th>Activo</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              viajes.map(viaje => {
+                return (
+                  <tr key={viaje.id}>
+                    <td>{viaje.titulo}</td>
+                    <td>{viaje.titulo}</td>
+                    <td>{viaje.subtitulo}</td>
+                    <td>Sí</td>
+                    <td><Link className='item' to={{ pathname: '/viaje/' + viaje.id, state: { parametro: 'hola' }}}>Ver</Link></td>
+                  </tr>
+                  
+                )
+              })
+            }
+            {
+              viajesHistorico.map(viajeHistorico => {
+                return (
+                  <tr key={viajeHistorico.id}>
+                    <td>{viajeHistorico.titulo}</td>
+                    <td>{viajeHistorico.subtitulo}</td>
+                    <td>No</td>
+                    <td><Link className='item' to={{ pathname: '/historico/' + viajeHistorico.id }}>Ver</Link></td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>        
+        </table>
+        <Link className='item' to={this.props.path} onClick={this.mostrarAlta}>Nuevo viaje</Link>
       </div>
     );
   }
@@ -142,11 +192,11 @@ class MisViajes extends Component {
   }
 
   render() {
-    const { viajes, loading, showCreate } = this.state;
+    const { viajes, viajesHistorico, loadingViaje, loadingHistorico, showCreate } = this.state;
   
-    if (!loading) {
+    if (!loadingViaje && !loadingHistorico) {
       if (!showCreate) {
-        return this.renderMisViajes(viajes);
+        return this.renderMisViajes(viajes, viajesHistorico);
       } else {
         return this.renderPost();
       }     
