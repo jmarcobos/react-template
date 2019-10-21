@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import { getViajes } from './viajes.service';
+import { Link } from 'react-router-dom';
 import './viajes.css';
 
 class Viajes extends Component {
@@ -27,8 +28,12 @@ class Viajes extends Component {
       const { titulo, cuerpo, id } = viaje;
       return (
         <div key={id} className='viajes-item'>
-          <h1>{titulo}</h1>
-          <p>{cuerpo}</p>
+          <Link to={{ pathname: '/viaje/' + id }}>
+            <div>
+              <h1>{titulo}</h1>
+              <p>{cuerpo}</p>
+            </div>
+            </Link>
         </div>
       );
     });

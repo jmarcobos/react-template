@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Navbar from './components/shared/navbar/navbar';
 import Inicio from './components/content/inicio/inicio';
 import Viajes from './components/content/viajes/viajes';
+import Viaje from './components/content/viaje/viaje';
 import Login from './components/content/login/login';
 import Recordar from './components/content/recordar/recordar';
 import Personal from './components/content/user_area/user_area';
@@ -19,6 +20,7 @@ class App extends Component {
           <Switch> 
             <Route path='/' exact component={Inicio} />          
             <Route path='/viajes' component={Viajes} />
+            <Route path='/viaje/:id' component={Viaje} />
             <Route path='/login' component={Login} />
             <Route path='/recordar' component={Recordar} />
             <Route path='/personal' component={Personal} />

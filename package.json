@@ -1,6 +1,7 @@
 {
-  "name": "mi-react",
+  "name": "react-template",
   "version": "0.1.0",
+  "description": "A React template for news projects.",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
