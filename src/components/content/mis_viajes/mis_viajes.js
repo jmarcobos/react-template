@@ -105,89 +105,113 @@ class MisViajes extends Component {
 
   renderMisViajes = (viajes, viajesHistorico) => {
     return (
-      <div>
-        <h4>Viajes</h4>    
-        <table>
-          <thead>
-            <tr>
-              <th>Titulo</th>
-              <th>Subtitulo</th>
-              <th>Activo</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              viajes.map(viaje => {
-                return (
-                  <tr key={viaje.id}>
-                    <td>{viaje.titulo}</td>
-                    <td>{viaje.titulo}</td>
-                    <td>{viaje.subtitulo}</td>
-                    <td>Sí</td>
-                    <td><Link className='item' to={{ pathname: '/viaje/' + viaje.id, state: { parametro: 'hola' }}}>Ver</Link></td>
-                  </tr>
-                  
-                )
-              })
-            }
-            {
-              viajesHistorico.map(viajeHistorico => {
-                return (
-                  <tr key={viajeHistorico.id}>
-                    <td>{viajeHistorico.titulo}</td>
-                    <td>{viajeHistorico.subtitulo}</td>
-                    <td>No</td>
-                    <td><Link className='item' to={{ pathname: '/historico/' + viajeHistorico.id }}>Ver</Link></td>
-                  </tr>
-                )
-              })
-            }
-          </tbody>        
-        </table>
-        <Link className='item' to={this.props.path} onClick={this.mostrarAlta}>Nuevo viaje</Link>
-      </div>
+      <section className = 'section mis_viajes'>
+        <div className='container'>
+          <h4 className="title is-4">Viajes</h4>  
+          <div className="columns">
+            <div className="column is-one-fifth">
+              <h5 className="title is-5">Fecha creación</h5>
+            </div>
+            <div className="column is-one-quarter">
+              <h5 className="title is-5">Título</h5>
+            </div>
+            <div className="column is-one-third">
+              <h5 className="title is-5">Subtitulo</h5>
+            </div>
+            <div className="column">
+              <h5 className="title is-5">Activo</h5>
+            </div>
+          </div>
+          {
+            viajes.map(viaje => {
+              return (
+                <div className="columns" key={viaje.id}>
+                  <div className="column is-one-fifth">{viaje.created_date.substring(0, 10)}</div>
+                  <div className="column is-one-quarter">{viaje.titulo}</div>
+                  <div className="column is-one-third">{viaje.subtitulo}</div>
+                  <div className="column">Sí</div>
+                  <div className="column"><Link className='item' to={{ pathname: '/viaje/' + viaje.id, state: { parametro: 'hola' }}}>Ver</Link></div>
+                </div>
+              )
+            })
+          }
+          {
+            viajesHistorico.map(viajeHistorico => {
+              return (
+                <div className="columns" key={viajeHistorico.id}>
+                  <div className="column is-one-fifth">{viajeHistorico.created_date.substring(0, 10)}</div>
+                  <div className="column is-one-quarter">{viajeHistorico.titulo}</div>
+                  <div className="column is-one-third">{viajeHistorico.subtitulo}</div>
+                  <div className="column">No</div>
+                  <div className="column"><Link className='item' to={{ pathname: '/historico/' + viajeHistorico.id }}>Ver</Link></div>
+                </div>
+              )
+            })
+          }
+          <div className="buttons has-addons is-centered">
+          <Link className="button is-dark is-right" to={this.props.path} onClick={this.mostrarAlta}>Nuevo viaje</Link>
+          </div>
+        </div>
+      </section>
     );
   }
 
   renderPost = () => {
     return (
-      <div>
+      <section className = 'section mis_viajes'>
+      <div className="container">
         <form onSubmit={this.submit}>
-          <label>
-            Título:<br></br>
-            <input type="text" value={this.state.titulo} onChange={this.onChangeTitulo} />
-          </label>
-          <br></br>
-          <label>
-            Subtítulo:<br></br>
-            <input type="text" value={this.state.subtitulo} onChange={this.onChangeSubtitulo} />
-          </label>
-          <br></br>
-          <label>
-            Cuerpo:<br></br>
-            <input type="text" value={this.state.cuerpo} onChange={this.onChangeCuerpo} />
-          </label>
-          <br></br>
-          <label>
-            Fecha inicio:<br></br>
-            <input type="text" value={this.state.inicio} onChange={this.onChangeInicio} />
-          </label>
-          <br></br>
-          <label>
-            Fecha fin:<br></br>
-            <input type="text" value={this.state.fin} onChange={this.onChangeFin} />
-          </label>
-          <br></br>
-          <label>
-            Precio:<br></br>
-            <input type="text" value={this.state.precio} onChange={this.onChangePrecio} />
-          </label>
-          <br></br>
-          <br></br>
-          <input type="submit" value="Aceptar" />
+          <div className="field">
+            <label className="label">Título</label>
+            <div className="control">
+              <input className="input" type="text" placeholder="p. ej. Vaije a Almería" value={this.state.titulo} onChange={this.onChangeTitulo} />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Subtítulo</label>
+            <div className="control">
+              <input className="input" type="text" placeholder="p. ej. Alex Smith" value={this.state.subtitulo} onChange={this.onChangeSubtitulo} />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Cuerpo</label>
+            <div className="control">
+              <input className="input" type="text" placeholder="p. ej. Alex Smith" value={this.state.cuerpo} onChange={this.onChangeCuerpo} />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Fecha inicio</label>
+            <div className="control">
+              <input className="input" type="text" placeholder="p. ej. Alex Smith" value={this.state.inicio} onChange={this.onChangeInicio} />
+            </div>
+          </div>
+          <div className="field">
+            <label className="label">Fecha fin</label>
+            <div className="control">
+            </div>
+              <input className="input" type="text" placeholder="p. ej. Alex Smith" value={this.state.fin} onChange={this.onChangeInicio} />
+          </div>
+          <div className="field">
+            <label className="label">Precio</label>
+            <div className="control">
+            </div>
+              <input className="input" type="text" placeholder="p. ej. Alex Smith" value={this.state.precio} onChange={this.onChangePrecio} />
+          </div>
+          <div className="field is-grouped is-grouped-right">
+            <p className="control">
+              <a className="button is-primary" type="submit">
+                Aceptar
+              </a>
+            </p>
+            <p className="control">
+              <a className="button is-light">
+                Cancelar
+              </a>
+            </p>
+          </div>
         </form>
       </div>
+      </section>
     );
   }
 

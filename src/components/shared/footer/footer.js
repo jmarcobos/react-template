@@ -20,25 +20,26 @@ class Footer extends Component {
             });
     }
 
-    renderPosts = () => {
-        const { etiquetas } = this.state;
-        return etiquetas.data.map((viaje, index) => {
-          const { castellano } = viaje;
-          return (
-            <div key={index} className='footer-item'>
-                <h5>{castellano}</h5>
-            </div>
-          );
-        });
-    }
-
     render() {
-        const { loading } = this.state;
-        return (
-        <div className = 'footer'>
-            {loading ? '' : this.renderPosts()}
-            </div>
-        );
+        const { loading, etiquetas } = this.state;
+        if (!loading) {
+            return (
+                <footer className='pie'>
+                    <nav className='level'>
+                        {etiquetas.data.map((viaje, index) => {
+                            const { castellano } = viaje;
+                            return (
+                                <div key={index} className='level-item has-text-centered'>
+                                    <h5>{castellano}</h5>
+                                </div>
+                            );
+                        })}
+                    </nav>
+                </footer>
+            )
+        } else {
+            return '';
+        }
     }
     
 }

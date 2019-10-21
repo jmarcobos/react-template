@@ -8,7 +8,7 @@ class Navbar extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { user: '' };
+    this.state = { user: '', ruta: '' };
   }
 
   logearse = (msg, data) => {
@@ -37,13 +37,28 @@ class Navbar extends Component {
   render() {
     if (this.state.user) {
       return (
-        <div className='navbar'>
-          <Link className='item' to='/'>Logo</Link>
-          <Link className='item' to='/viajes'>Viajes</Link>
-          <div className='busqueda' texto="Búsqueda">Búsqueda</div>
-          <Link className='item' to='/personal'>{this.state.user}</Link>
-          <Link className='item' to={this.props.path} onClick={this.salir}>Salir</Link>
-        </div>
+        <nav className="level navegacion">
+          <p className="level-item has-text-centered">
+            <Link className='link is-info' to='/'>Logo</Link>
+          </p>
+          <p className="level-item has-text-centered">
+            <Link className='link is-info' to='/viajes'>Viajes</Link>
+          </p>
+          <p className="level-item has-text-centered">
+            <span className="control has-icons-left">
+              <input className="input is-rounded" type="text" placeholder="Búsqueda" />
+              <span className="icon is-small is-left">
+                <i className="fa fa-search"></i>
+              </span>
+            </span>
+          </p>
+          <p className="level-item has-text-centered">
+            <Link className='link is-info' to='/personal'>{this.state.user}</Link>
+          </p>
+          <p className="level-item has-text-centered">
+          <Link className='link is-info' to={this.state.ruta} onClick={this.salir}>Salir</Link>
+          </p>
+        </nav>
       );
     } else {
       return (

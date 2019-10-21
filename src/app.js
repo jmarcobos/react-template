@@ -10,6 +10,7 @@ import Personal from './components/content/user_area/user_area';
 import MisViajes from './components/content/mis_viajes/mis_viajes';
 import Footer from './components/shared/footer/footer';
 import './app.css';
+import './mystyles.css';
 
 class App extends Component {
   render() {

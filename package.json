@@ -5,8 +5,12 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "bulma": "^0.7.5",
+    "font-awesome": "^4.7.0",
+    "node-sass": "^4.12.0",
     "pubsub-js": "^1.7.0",
     "react": "^16.8.4",
+    "react-bulma-components": "^3.1.3",
     "react-dom": "^16.8.4",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
@@ -16,7 +20,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "css-build": "node-sass --omit-source-map-url ./src/mystyles.scss ./src/mystyles.css",
+    "css-watch": "npm run css-build -- --watch"
   },
   "eslintConfig": {
     "extends": "react-app"

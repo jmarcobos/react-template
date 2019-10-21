@@ -1,6 +1,3 @@
 .mis_viajes {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    width: 100%;
+    min-height: 85vh;
 }

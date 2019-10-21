@@ -14,17 +14,7 @@ class UserArea extends Component {
   logout = () => {
     localStorage.clear();
     PubSub.publish('logeado', null);
-    this.setState({ redirect: true }); 
-  }
-
-  renderUserArea = () => {
-    return (
-      <div className='user_area'>
-        <Link className='item' to='/misviajes'>Mis viajes</Link>
-        <Link className='item' to='/misdatos'>Datos personales</Link>
-        <Link className='item' to={this.props.path} onClick={this.logout}>Salir</Link>
-      </div>
-    );
+    this.setState({ redirect: true });
   }
 
   render() {
@@ -32,7 +22,23 @@ class UserArea extends Component {
     if (redirect) {
       return <Redirect  to='/login' />
     } else {
-      return this.renderUserArea();
+      return (
+        <section className = 'section user_area'>
+          <div className='container'>
+          <nav className="level">
+            <p className="level-item has-text-centered">
+              <Link className='link is-info' to='/misviajes'>Mis viajes</Link>
+            </p>
+            <p className="level-item has-text-centered">
+              <Link className='item' to='/misdatos'>Datos personales</Link>
+            </p>
+            <p className="level-item has-text-centered">
+            <Link className='item' to={this.props.location.pathname} onClick={this.logout}>Salir</Link>
+            </p>
+            </nav>
+          </div>
+        </section>
+      )
     }
   }
   

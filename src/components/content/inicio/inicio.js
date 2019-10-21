@@ -28,10 +28,10 @@ class Inicio extends Component {
         var subtitulo = this.state.etiquetas.data.filter(x => x.nombre === 'subtitulo');
         var cuerpo = this.state.etiquetas.data.filter(x => x.nombre === 'cuerpo');
         return (
-            <div className='inicio-item'>
-                <h1>{titulo[0].castellano}</h1>
-                <h3>{subtitulo[0].castellano}</h3>
-                <h5>{cuerpo[0].castellano}</h5>
+            <div className='container'>
+                <h1 className="title">{titulo[0].castellano}</h1>
+                <h3 className="subtitle is-4">{subtitulo[0].castellano}</h3>
+                <h5 className="subtitle is-5">{cuerpo[0].castellano}</h5>
             </div>
         );
     }
@@ -39,9 +39,9 @@ class Inicio extends Component {
     render() {
         const { loading } = this.state;
         return (
-            <div className = 'inicio'>
+            <section className = 'section inicio'>
                 {loading ? 'Cargando...' : this.renderPosts()}
-            </div>
+            </section>
         );
     }
     
