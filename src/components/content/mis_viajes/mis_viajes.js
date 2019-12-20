@@ -1,8 +1,12 @@
 import React from 'react';
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
+import 'moment/locale/fr.js';
+import { DatePicker, DatePickerInput } from 'rc-datepicker';
+import Moment from 'react-moment';
 import { getMisViajes, getMisViajesHistorico, postMiViaje } from './mis_viajes.service';
 import './mis_viajes.css';
+import 'rc-datepicker/lib/style.css';
 
 class MisViajes extends Component {
 
@@ -18,12 +22,17 @@ class MisViajes extends Component {
       titulo: '', 
       subtitulo: '', 
       cuerpo: '', 
-      inicio: '', 
+      inicio: new Date(), 
       fin: '', 
-      precio: '' 
+      precio: '',
+      modalActive: false
     };
     this.submit = this.submit.bind(this);
+    
   }
+
+  onChangeInicio = inicio => this.setState({ inicio, modalActive: false });
+  closeCalendar = () => this.setState({ modalActive: false });
 
   componentWillMount = () => {
     getMisViajes(localStorage.getItem('email'))
@@ -91,9 +100,13 @@ class MisViajes extends Component {
     this.setState({ cuerpo: event.target.value });
   }
 
-  onChangeInicio = event => {
-    this.setState({ inicio: event.target.value });
+  clickCalendar = event => {
+    this.setState({ modalActive: true });
   }
+
+  /*onChangeInicio = event => {
+    this.setState({ inicio: new Date(event.target.value) });
+  }*/
 
   onChangeFin = event => {
     this.setState({ fin: event.target.value });
@@ -179,10 +192,14 @@ class MisViajes extends Component {
               <input className="input" type="text" placeholder="p. ej. Alex Smith" value={this.state.cuerpo} onChange={this.onChangeCuerpo} />
             </div>
           </div>
-          <div className="field">
-            <label className="label">Fecha inicio</label>
+          <div className="field has-addons">
             <div className="control">
-              <input className="input" type="text" placeholder="p. ej. Alex Smith" value={this.state.inicio} onChange={this.onChangeInicio} />
+              <input className="input" type="text" placeholder="Fecha inicio" value={this.state.inicio} />
+            </div>
+            <div className="control">
+              <a className="button is-info" onClick={this.clickCalendar}>
+                Calendar
+              </a>
             </div>
           </div>
           <div className="field">
@@ -208,6 +225,19 @@ class MisViajes extends Component {
                 Cancelar
               </a>
             </p>
+          </div>
+          <div className={this.state.modalActive ? "modal is-active" : "modal"}>
+            <div className="modal-background"></div>
+            <div className="modal-content">
+              <div className="box">
+                <div className="media-content">
+                  <div className="has-text-centered">
+                    <DatePicker onChange={this.onChangeInicio} value={this.state.inicio} />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button className="modal-close is-large" aria-label="close" onClick={this.closeCalendar}></button>
           </div>
         </form>
       </div>

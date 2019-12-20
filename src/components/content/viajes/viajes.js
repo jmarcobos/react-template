@@ -33,7 +33,7 @@ class Viajes extends Component {
               <h1>{titulo}</h1>
               <p>{cuerpo}</p>
             </div>
-            </Link>
+          </Link>
         </div>
       );
     });

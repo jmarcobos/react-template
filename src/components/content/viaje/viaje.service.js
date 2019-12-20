@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const urlViajes = 'http://localhost:4200/viajes';
+const urlViaje = 'http://localhost:4200/viajes';
 
 export function getViaje(idViaje) {
-    return axios.get(urlViajes + '/' + idViaje);
+    return axios.get(urlViaje + '/' + idViaje);
 };

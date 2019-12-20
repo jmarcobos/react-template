@@ -19,7 +19,7 @@ class Inicio extends Component {
                 });
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
             });
     }
 
