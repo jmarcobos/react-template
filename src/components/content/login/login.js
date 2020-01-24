@@ -10,7 +10,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = { redirect: false, error: false, email: '', password: '' };
-    this.submit = this.submit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
   
   onChangeUsername = event => {
@@ -21,7 +21,7 @@ class Login extends Component {
     this.setState({ password: event.target.value });
   }
 
-  submit = event => {
+  onSubmit = event => {
     event.preventDefault();
     getUsuarioByEmail(this.state.email)
       .then((response) => {
@@ -41,29 +41,49 @@ class Login extends Component {
 
   renderLogin = () => {
     return (
-      <div>
-        <form onSubmit={this.submit}>
-          <label>
-            Username:<br></br>
-            <input type="text" value={this.state.email} onChange={this.onChangeUsername} />
-          </label>
-          <br></br>
-          <label>
-            Password:<br></br>
-            <input type="text" value={this.state.password} onChange={this.onChangePassword} />
-          </label>
-          <br></br>
-          <br></br>
-          <input type="submit" value="Aceptar" />
+      <div className='container'>
+        <form onSubmit={this.onSubmit}>
+          <div className='columns'>
+            <div className='column is-half is-offset-one-quarter'>
+              <div className="field">
+                <label className="label">Username:</label>
+                <div className="control">
+                  <input className="input" type="text" placeholder='Escriba aquí su nombre de usuario' value={this.state.email} onChange={this.onChangeUsername} />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Password:</label>
+                <div className="control">
+                  <input className="input" type="password" placeholder='Escriba aquí su password' value={this.state.password} onChange={this.onChangePassword} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='columns is-centered'>
+            <div className='column is-half is-offset-one-quarter'>
+              <div className="field is-grouped">
+                <div className="control">
+                  <button type="submit" className="button is-link">Aceptar</button>
+                </div>
+                <div className="control">
+                  <button className="button is-link is-light">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='columns is-centered'>
+            <div className='column is-half is-offset-one-quarter'>
+              <Link className='item' to='/recordar'>¿Olvidó su contraseña?</Link>
+            </div>
+          </div>
         </form>
-        <Link className='item' to='/recordar'>Olvidó su contraseña?</Link>
       </div>
     );
   }
 
   renderError = () => {
     return (
-      <div>
+      <div className='container'>
         <form onSubmit={this.submit}>
           <p> Usuario o contraseña incorrectos. </p>
           <label>
@@ -89,9 +109,9 @@ class Login extends Component {
       return <Redirect  to='/viajes' />
     } else {
       if (!error) {
-        return (<div className = 'login'> {this.renderLogin()} </div>);
+        return (<div className = 'section'> {this.renderLogin()} </div>);
       } else {
-        return (<div className = 'login'> {this.renderError()} </div>);
+        return (<div className = 'section'> {this.renderError()} </div>);
       }
     }
   }

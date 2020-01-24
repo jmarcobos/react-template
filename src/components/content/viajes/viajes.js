@@ -2,7 +2,6 @@ import React from 'react';
 import { Component } from 'react';
 import { getViajes } from './viajes.service';
 import { Link } from 'react-router-dom';
-import './viajes.css';
 
 class Viajes extends Component {
 
@@ -24,25 +23,47 @@ class Viajes extends Component {
 
   renderPosts = () => {
     const { viajes } = this.state;
-    return viajes.data.map(viaje => {
-      const { titulo, cuerpo, id } = viaje;
-      return (
-        <div key={id} className='viajes-item'>
-          <Link to={{ pathname: '/viaje/' + id }}>
-            <div>
-              <h1>{titulo}</h1>
-              <p>{cuerpo}</p>
-            </div>
-          </Link>
+    return (
+      <div className='container'>
+        <div className='columns'>
+          {
+            viajes.data.map(viaje => {
+              const { titulo, subtitulo, inicio, precio, id } = viaje;
+              return (
+                <div key={id} className='column is-one-third'>
+                  <Link to={{ pathname: '/viaje/' + id }}>
+                  <div className='card'>
+                    <div className='card-header'>
+                    <div className="card-header-title">
+                      <p className='title is-4'>{titulo}</p>
+                    </div>
+                    </div>
+                    <div className='card-content'>
+                      <p className='subtitle is-6 ellipsis'>{subtitulo}</p>
+                    </div>
+                    <div className='card-footer'>
+                      <div className='card-footer-item'>
+                        <p className='subtitle is-6'>{inicio.substring(0, 10)}</p>
+                      </div>
+                      <div className='card-footer-item'>
+                        <p className='subtitle is-6'>{precio}</p> 
+                      </div>
+                    </div>
+                  </div>
+                  </Link>
+                </div>
+              )
+            })
+          }
         </div>
-      );
-    });
+      </div>
+    );
   }
 
   render() {
     const { loading } = this.state;
     return (
-      <div className = 'viajes'>
+      <div className = 'section'>
         {loading ? 'Cargando...' : this.renderPosts()}
       </div>
     );

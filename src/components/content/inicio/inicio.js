@@ -1,7 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
 import { getEtiquetas } from './inicio.service';
-import './inicio.css';
 
 class Inicio extends Component {
 
@@ -18,9 +17,7 @@ class Inicio extends Component {
                     loading: false
                 });
             })
-            .catch((err) => {
-                console.log(err);
-            });
+            .catch((err) => console.log(err));
     }
 
     renderPosts = () => {
@@ -39,7 +36,7 @@ class Inicio extends Component {
     render() {
         const { loading } = this.state;
         return (
-            <section className = 'section inicio'>
+            <section className = 'section'>
                 {loading ? 'Cargando...' : this.renderPosts()}
             </section>
         );

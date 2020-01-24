@@ -22,3 +22,9 @@
 .App-link {
   color: #61dafb;
 }
+
+.ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

@@ -15,9 +15,7 @@ class Footer extends Component {
             .then((response) => {
                 this.setState ({ etiquetas: response.data, loading: false });
             })
-            .catch((err) => {
-                console.log(err)
-            });
+            .catch((err) => console.log(err));
     }
 
     render() {
