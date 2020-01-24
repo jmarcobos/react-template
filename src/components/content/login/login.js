@@ -1,9 +1,7 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom'
 import PubSub from 'pubsub-js';
 import { getUsuarioByEmail } from './login.service';
-import './login.css';
 
 class Login extends Component {
 
@@ -40,6 +38,7 @@ class Login extends Component {
   }
 
   renderLogin = () => {
+    const { error } = this.state;
     return (
       <div className='container'>
         <form onSubmit={this.onSubmit}>
@@ -59,9 +58,16 @@ class Login extends Component {
               </div>
             </div>
           </div>
-          <div className='columns is-centered'>
+          { !error ? null : 
+            <div className='columns'>
+              <div className='column is-half is-offset-one-quarter'>
+                <p className='has-text-centered'>Usuario o contraseña incorrectos.</p>
+              </div>
+            </div>
+          }
+          <div className='columns'>
             <div className='column is-half is-offset-one-quarter'>
-              <div className="field is-grouped">
+              <div className="field is-grouped is-grouped-centered">
                 <div className="control">
                   <button type="submit" className="button is-link">Aceptar</button>
                 </div>
@@ -81,38 +87,16 @@ class Login extends Component {
     );
   }
 
-  renderError = () => {
-    return (
-      <div className='container'>
-        <form onSubmit={this.submit}>
-          <p> Usuario o contraseña incorrectos. </p>
-          <label>
-            Username:<br></br>
-            <input type="text" value={this.state.email} onChange={this.onChangeUsername} />
-          </label>
-          <br></br>
-          <label>
-            Password:<br></br>
-            <input type="text" value={this.state.password} onChange={this.onChangePassword} />
-          </label>
-          <br></br>
-          <br></br>
-          <input type="submit" value="Aceptar" />
-        </form>
-      </div>
-    );
-  }
-
   render() {
-    const { redirect, error } = this.state;
+    const { redirect } = this.state;
     if (redirect) {
-      return <Redirect  to='/viajes' />
+      return <Redirect to='/viajes' />
     } else {
-      if (!error) {
-        return (<div className = 'section'> {this.renderLogin()} </div>);
-      } else {
-        return (<div className = 'section'> {this.renderError()} </div>);
-      }
+        return (
+          <div className = 'section'>
+            { this.renderLogin() }
+          </div>
+        );
     }
   }
   

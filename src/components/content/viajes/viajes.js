@@ -1,27 +1,38 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { getViajes } from './viajes.service';
 import { Link } from 'react-router-dom';
+import Loading from './../../shared/pages/loading/loading';
+import Error from './../../shared/pages/error/error';
 
 class Viajes extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { loading: true, viajes: [] };
+    this.state = { 
+      loading: true,
+      error: false,
+      errorObject: null, 
+      viajes: [] 
+    };
   }
 
   componentDidMount() {
     getViajes()
-      .then((response) => {
+      .then(response => {
         this.setState({
           viajes: response.data,
-          loading: false,
+          loading: false
         });
       })
-      .catch((err) => console.log(err));
+      .catch(e => {
+        this.setState({ 
+          error: true,
+          errorObject: e
+        });
+      });
   }
 
-  renderPosts = () => {
+  renderViajes = () => {
     const { viajes } = this.state;
     return (
       <div className='container'>
@@ -61,12 +72,12 @@ class Viajes extends Component {
   }
 
   render() {
-    const { loading } = this.state;
+    const { loading, error, errorObject } = this.state;
     return (
-      <div className = 'section'>
-        {loading ? 'Cargando...' : this.renderPosts()}
+      <div className='section'>
+        { !error ? loading ? <Loading /> : this.renderViajes() : <Error errorObject={errorObject} /> }
       </div>
-    );
+    )
   }
 
 }

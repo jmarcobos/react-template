@@ -1,12 +1,18 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { getEtiquetas } from './inicio.service';
+import Loading from './../../shared/pages/loading/loading';
+import Error from './../../shared/pages/error/error';
 
 class Inicio extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { loading: true, etiquetas: [] };
+        this.state = { 
+            loading: true,
+            error: false,
+            errorObject: null, 
+            etiquetas: [] 
+        };
     }
 
     componentDidMount() {
@@ -17,10 +23,15 @@ class Inicio extends Component {
                     loading: false
                 });
             })
-            .catch((err) => console.log(err));
+            .catch(e => {
+                this.setState({ 
+                  error: true,
+                  errorObject: e
+                });
+              });
     }
 
-    renderPosts = () => {
+    renderInicio = () => {
         var titulo = this.state.etiquetas.data.filter(x => x.nombre === 'titulo');
         var subtitulo = this.state.etiquetas.data.filter(x => x.nombre === 'subtitulo');
         var cuerpo = this.state.etiquetas.data.filter(x => x.nombre === 'cuerpo');
@@ -34,13 +45,13 @@ class Inicio extends Component {
     }
 
     render() {
-        const { loading } = this.state;
+        const { loading, error, errorObject } = this.state;
         return (
-            <section className = 'section'>
-                {loading ? 'Cargando...' : this.renderPosts()}
-            </section>
-        );
-    }
+          <div className='section'>
+            { !error ? loading ? <Loading /> : this.renderInicio() : <Error errorObject={errorObject} /> }
+          </div>
+        )
+      }
     
 }
 

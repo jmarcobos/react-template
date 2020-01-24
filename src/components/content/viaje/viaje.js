@@ -22,8 +22,6 @@ class Viaje extends Component {
         this.setState({ 
           viaje: response.data[0][0], 
           usuarios: response.data[1], 
-          error: false,
-          errorObject: null,
           loading: false 
         });
       })
